@@ -20,5 +20,5 @@ inputs:
     required: true
 runs:
   using: 'node20'
-  main: 'dist/action.js'
+  main: 'compiled/index.js'
   
