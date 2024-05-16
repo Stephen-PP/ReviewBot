@@ -49,6 +49,7 @@ function run() {
             core.setFailed('No pull request found.');
             return;
         }
+        console.log(core.getInput("github-token").length);
         // Get the differences in the current PR
         const client = github.getOctokit(core.getInput('github-token'));
         const diff = yield client.rest.pulls.listFiles({

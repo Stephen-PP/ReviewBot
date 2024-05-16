@@ -9,6 +9,8 @@ async function run() {
         return
     }
 
+    console.log(core.getInput("github-token").length)
+
     // Get the differences in the current PR
     const client = github.getOctokit(core.getInput('github-token'))
     const diff = await client.rest.pulls.listFiles({
