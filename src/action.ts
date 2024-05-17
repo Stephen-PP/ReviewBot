@@ -1,5 +1,12 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import fs from "fs"
+
+interface PRFile {
+    filename: string;
+    status: string;
+    patch: string;
+}
 
 async function run() {
     // Get current PR
@@ -10,19 +17,15 @@ async function run() {
     }
 
     // Get the differences in the current PR
-    const client = github.getOctokit(core.getInput('github-token'))
-    const diff = await client.rest.pulls.listFiles({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        pull_number: pr.number
-    })
+    const client = github.getOctokit(core.getInput('GITHUB_TOKEN'))
 
-    core.info(JSON.stringify(diff))
+    const prFiles = await client.paginate<PRFile>({
+        method: "GET",
+        url: `/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${pr.number}/files`,
+        per_page: 250
+    });
 
-    await fetch('https://enqvoubvhxpp.x.pipedream.net', {
-        method: "POST",
-        body: JSON.stringify(diff),
-    })
+    
 }
 
 run()

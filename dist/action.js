@@ -42,15 +42,13 @@ function run() {
             core.setFailed('No pull request found.');
             return;
         }
-        console.log(core.getInput("github-token").length);
         // Get the differences in the current PR
-        const client = github.getOctokit(core.getInput('github-token'));
-        const diff = yield client.rest.pulls.listFiles({
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            pull_number: pr.number
+        const client = github.getOctokit(core.getInput('GITHUB_TOKEN'));
+        const prFiles = yield client.paginate({
+            method: "GET",
+            url: `/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${pr.number}/files`,
+            per_page: 250
         });
-        core.info(JSON.stringify(diff));
     });
 }
 run();

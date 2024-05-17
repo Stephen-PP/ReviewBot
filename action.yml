@@ -1,21 +1,14 @@
 name: 'ReviewBot'
 description: 'A GitHub Action to automate code review process.'
-inputs: 
-  openapi-key:
-    description: 'OpenAPI key'
-    required: false
-  openapi-model:
-    description: 'OpenAPI model'
-    required: false
-    default: 'gpt-4o'
-  gemini-key:
+inputs:
+  GEMINI_KEY:
     description: 'Gemini key'
     required: false
-  gemini-model:
+  GEMINI_MODEL:
     description: 'Gemini model'
     required: false
     default: 'gemini-1.5-flash-latest'
-  github-token:
+  GITHUB_TOKEN:
     description: 'GitHub token'
     required: true
 runs:
