@@ -49,6 +49,16 @@ function run() {
             url: `/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${pr.number}/files`,
             per_page: 250
         });
+        // 
+        if (prFiles.length >= 1000) {
+        }
+        const files = prFiles.map((file) => {
+            return {
+                filename: file.filename,
+                status: file.status,
+                patch: file.patch
+            };
+        });
     });
 }
 run();
